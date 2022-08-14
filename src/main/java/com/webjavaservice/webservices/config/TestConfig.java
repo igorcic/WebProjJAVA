@@ -1,14 +1,8 @@
 package com.webjavaservice.webservices.config;
 
-import com.webjavaservice.webservices.entities.Category;
-import com.webjavaservice.webservices.entities.Order;
-import com.webjavaservice.webservices.entities.Product;
-import com.webjavaservice.webservices.entities.Users;
+import com.webjavaservice.webservices.entities.*;
 import com.webjavaservice.webservices.entities.enuns.OrderStatus;
-import com.webjavaservice.webservices.repository.CategoryRepository;
-import com.webjavaservice.webservices.repository.OrderRepository;
-import com.webjavaservice.webservices.repository.ProductRepository;
-import com.webjavaservice.webservices.repository.UserRepository;
+import com.webjavaservice.webservices.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,13 +21,15 @@ public class TestConfig implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
 
     private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
 
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository,OrderItemRepository orderItemRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
 
@@ -69,6 +65,13 @@ public class TestConfig implements CommandLineRunner {
         p5.getCategories().add(cat2);
 
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
     }
 }

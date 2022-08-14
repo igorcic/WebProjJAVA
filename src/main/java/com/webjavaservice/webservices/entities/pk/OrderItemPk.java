@@ -5,13 +5,12 @@ import com.webjavaservice.webservices.entities.Product;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class OrdemItemPk implements Serializable {
+public class OrderItemPk implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
@@ -41,8 +40,8 @@ public class OrdemItemPk implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrdemItemPk)) return false;
-        OrdemItemPk that = (OrdemItemPk) o;
+        if (!(o instanceof OrderItemPk)) return false;
+        OrderItemPk that = (OrderItemPk) o;
         return Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getProduct(), that.getProduct());
     }
 

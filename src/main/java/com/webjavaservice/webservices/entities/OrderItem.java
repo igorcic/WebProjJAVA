@@ -1,10 +1,9 @@
 package com.webjavaservice.webservices.entities;
 
-import com.webjavaservice.webservices.entities.pk.OrdemItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.webjavaservice.webservices.entities.pk.OrderItemPk;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrdemItemPk id;
+    private OrderItemPk id = new OrderItemPk();
     private Integer quantity;
     private Double price;
 
@@ -44,6 +43,7 @@ public class OrderItem implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
