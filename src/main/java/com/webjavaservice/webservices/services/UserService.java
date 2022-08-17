@@ -2,8 +2,11 @@ package com.webjavaservice.webservices.services;
 
 import com.webjavaservice.webservices.entities.Users;
 import com.webjavaservice.webservices.repository.UserRepository;
+import com.webjavaservice.webservices.services.exception.DatabaseException;
 import com.webjavaservice.webservices.services.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,14 @@ public class UserService {
     }
 
     public void delete(Long id){
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
     public Users update(Long id, Users obj){
         Users entity = userRepository. getReferenceById(id);
